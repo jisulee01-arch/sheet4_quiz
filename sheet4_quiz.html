@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>건축기사 4과목</title>
+<style>
+:root{
+  --bg:#f5f3ee;--card:#fff;--card2:#faf9f6;--bd:#e0ddd6;
+  --tx:#1a1916;--mu:#7a776e;
+  --ac:#2d5a3d;--al:#e8f2eb;
+  --a2:#c8442a;--a2l:#fdf0ee;
+  --ye:#f5c842;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+header{background:var(--ac);color:#fff;padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.13)}
+header h1{font-size:1rem;font-weight:600}
+.hbtn{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:5px 12px;font-size:.77rem;cursor:pointer;font-family:inherit}
+.hbtn:hover{background:rgba(255,255,255,.3)}
+.hbtn.danger{background:rgba(200,68,42,.5);border-color:rgba(200,68,42,.7)}
+.hbtn.danger:hover{background:rgba(200,68,42,.75)}
+.tabs{display:flex;background:var(--card);border-bottom:1px solid var(--bd);padding:0 1.5rem;overflow-x:auto}
+.tab{padding:11px 16px;font-size:.84rem;font-family:inherit;color:var(--mu);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap}
+.tab.active{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}
+.main{max-width:760px;margin:0 auto;padding:1.4rem 1rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.15rem}
+.sc{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:11px;text-align:center}
+.sn{font-size:1.5rem;font-weight:700}.sl{font-size:.71rem;color:var(--mu);margin-top:2px}
+.cn{color:var(--ac)}.wn{color:var(--a2)}.fn{color:#c89b00}
+.tbar{display:flex;align-items:center;gap:8px;margin-bottom:.85rem;flex-wrap:wrap}
+.tbtn{padding:6px 12px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:6px;font-size:.77rem;font-family:inherit;cursor:pointer}
+.tbtn:hover{background:var(--al);border-color:var(--ac);color:var(--ac)}
+.tbtn.retry{background:var(--ac);color:#fff;border-color:var(--ac)}
+.tbtn.retry:hover{background:#1e4028}
+.ptxt{font-size:.78rem;color:var(--mu);margin-left:auto}
+.fbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.85rem}
+.fb{padding:5px 12px;background:var(--card);color:var(--mu);border:1px solid var(--bd);border-radius:99px;font-size:.74rem;font-family:inherit;cursor:pointer}
+.fb.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.pw{background:var(--bd);border-radius:99px;height:5px;margin-bottom:1.15rem;overflow:hidden}
+.pf{background:var(--ac);height:100%;border-radius:99px;transition:width .4s}
+.qcard{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.35rem;margin-bottom:.95rem;position:relative}
+.qm{display:flex;align-items:center;gap:8px;margin-bottom:.55rem;flex-wrap:wrap}
+.qn{font-size:.72rem;color:var(--mu);font-weight:600}
+.badge{font-size:.67rem;padding:2px 7px;border-radius:99px;font-weight:600}
+.box{background:#e8f0fb;color:#2456a4}.bmc{background:#f0eafb;color:#6234a4}.bsa{background:#fff3e0;color:#b36200}
+.favb{margin-left:auto;background:none;border:none;cursor:pointer;font-size:1.15rem;color:#d0cdc5;line-height:1;padding:2px}
+.favb.on{color:var(--ye)}
+.ind{position:absolute;top:11px;right:44px;font-size:.72rem;font-weight:600}
+.io{color:var(--ac)}.ix{color:var(--a2)}.ip{color:var(--mu);font-weight:400}
+.qt{font-size:.96rem;line-height:1.68;margin-bottom:.95rem;font-weight:500;white-space:pre-wrap;}
+.mco{display:flex;flex-direction:column;gap:7px}
+.mo{padding:10px 13px;border:1.5px solid var(--bd);border-radius:8px;background:var(--card2);cursor:pointer;text-align:left;font-size:.87rem;font-family:inherit;color:var(--tx);display:flex;align-items:center;gap:10px;line-height:1.5;white-space:pre-wrap;}
+.mo:not([disabled]):hover{background:var(--al);border-color:var(--ac)}
+.mo.sel{background:var(--al);border-color:var(--ac);color:var(--ac);font-weight:600}
+.ol{min-width:20px;height:20px;border-radius:50%;background:var(--bd);color:var(--mu);font-size:.71rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mo.sel .ol{background:var(--ac);color:#fff}
+.fbk{margin-top:.85rem;border-radius:8px;padding:.85rem 1rem;font-size:.84rem;line-height:1.7;display:none}
+.fbk.show{display:block}
+.fbk.ok{background:var(--al);border-left:3px solid var(--ac)}
+.fbk.ng{background:var(--a2l);border-left:3px solid var(--a2)}
+.fbh{font-weight:700;font-size:.91rem;margin-bottom:4px}
+.fbk.ok .fbh{color:var(--ac)}.fbk.ng .fbh{color:var(--a2)}
+.fba{color:var(--mu);font-size:.79rem;margin:3px 0 5px}
+.empty{text-align:center;padding:3.5rem 2rem;color:var(--mu);font-size:.9rem}
+.retry-banner{background:var(--ac);color:#fff;border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.retry-banner p{font-size:.88rem;line-height:1.5}
+.retry-banner button{background:#fff;color:var(--ac);border:none;border-radius:6px;padding:7px 14px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit}
+@media(max-width:600px){.main{padding:1rem .75rem}header{padding:.75rem 1rem}.tabs{padding:0 .75rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>건축기사 4과목</h1>
+  <button class="hbtn danger" onclick="confirmReset()">초기화</button>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tb-all"   onclick="switchTab(&quot;all&quot;)">전체 문제</button>
+  <button class="tab"        id="tb-fav"   onclick="switchTab(&quot;fav&quot;)">즐겨찾기</button>
+  <button class="tab"        id="tb-wrong" onclick="switchTab(&quot;wrong&quot;)">오답 문제</button>
+</div>
+<div class="main">
+  <div class="stats">
+    <div class="sc"><div class="sn cn" id="sc">0</div><div class="sl">맞힌 문제</div></div>
+    <div class="sc"><div class="sn wn" id="sw">0</div><div class="sl">틀린 문제</div></div>
+    <div class="sc"><div class="sn fn" id="sf">0</div><div class="sl">즐겨찾기</div></div>
+  </div>
+
+  <div id="pv-all">
+    <div class="fbar">
+      <button class="fb on" id="ff-all" onclick="setFilter(&quot;all&quot;)">전체</button>
+      <button class="fb"    id="ff-mc"  onclick="setFilter(&quot;mc&quot;)">객관식</button>
+      <button class="fb"    id="ff-un"  onclick="setFilter(&quot;un&quot;)">미완료</button>
+    </div>
+    <div class="tbar">
+      <button class="tbtn" onclick="doShuffle()">🔀 섞기</button>
+      <button class="tbtn" onclick="doReorder()">↩ 순서복원</button>
+      <span class="ptxt" id="ptxt">0 / 62 완료</span>
+    </div>
+    <div class="pw"><div class="pf" id="pb" style="width:0%"></div></div>
+    <div id="ql"></div>
+  </div>
+
+  <div id="pv-fav" style="display:none">
+    <div class="tbar">
+      <button class="tbtn retry" onclick="retryFav()">&#9654; 즐겨찾기만 다시 풀기</button>
+      <button class="tbtn" id="stop-fav" style="display:none" onclick="clearRetry()">&#10006; 모드 종료</button>
+    </div>
+    <div id="fl"></div>
+  </div>
+
+  <div id="pv-wrong" style="display:none">
+    <div class="tbar">
+      <button class="tbtn retry" onclick="retryWrong()">&#9654; 오답만 다시 풀기</button>
+      <button class="tbtn" id="stop-wrong" style="display:none" onclick="clearRetry()">&#10006; 모드 종료</button>
+    </div>
+    <div id="wl"></div>
+  </div>
+</div>
+
+<script id="qdata" type="application/json">
+[
+  {
+    "id": 1,
+    "type": "mc",
+    "text": "이중덕트방식에 관한 설명으로 옳은 것은?",
+    "answer": "혼합손실로 인한 에너지 소비량이 크다.",
+    "explanation": "2중덕트 방식: 냉풍과 온풍을 각각의 덕트로 보낸 후 말단의 혼합 상자에서 혼합하여 각 실에 송풍하는 전공기 방식의 에너지 다소비형 공조방식. 장점: 각 실별 온습도 개별제어 가능, 냉난방 동시 가능. 단점: 운전비·설비비 증가, 덕트 면적 크고 혼합 손실 큼.",
+    "options": [
+      "부하감소에 따라 송풍량이 감소된다.",
+      "부하변동에 따른 적응속도가 느리다.",
+      "혼합손실로 인한 에너지 소비량이 크다.",
+      "부하특성이 다른 여러 실에 적용하기 곤란하다."
+    ],
+    "비고": "03/05/2017"
+  },
+  {
+    "id": 2,
+    "type": "mc",
+    "text": "3상 대칭 성형(Y)결선에서 상전압이 220[V]일 때 선간전압은 얼마인가?",
+    "answer": "380[V]",
+    "explanation": "상전압과 선간전압의 관계: Vl = √3 × Vp = √3 × 220 ≈ 380V",
+    "options": [
+      "110[V]",
+      "220[V]",
+      "380[V]",
+      "440[V]"
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 3,
+    "type": "mc",
+    "text": "공기조화방식 중 전공기방식에 속하는 것은?",
+    "answer": "이중덕트 방식",
+    "explanation": "전공기 방식: 단일덕트, 2중덕트, 멀티존 유닛, 덕트병용패키지, 각층유닛 방식. 전수 방식: 팬코일유닛. 공기-수 방식: 유인유닛, 덕트병용 팬코일유닛.",
+    "options": [
+      "패키지 방식",
+      "이중덕트 방식",
+      "유인유닛 방식",
+      "팬코일유닛 방식"
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 4,
+    "type": "mc",
+    "text": "압력탱크 급수방식에 관한 설명으로 옳지 않은 것은?",
+    "answer": "급수 압력을 일정하게 유지할 수 있다.",
+    "explanation": "압력탱크 급수방식은 건물 높이에 따라 압력이 달라지므로 급수 압력을 일정하게 유지할 수 없음.",
+    "options": [
+      "정전시 급수가 곤란하다.",
+      "급수 압력을 일정하게 유지할 수 있다.",
+      "단수 시 저수조의 물을 사용 할 수 있다.",
+      "탱크를 높은 곳에 설치하지 않아도 된다."
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 5,
+    "type": "mc",
+    "text": "3상 유도전동기의 속도제어 방법으로 옳지 않은 것은?",
+    "answer": "2선의 접속을 바꿔 회전자계의 방향이 반대로 되도록 한다.",
+    "explanation": "속도제어 방법: 주파수 변환, 1차 전압 제어, 극수 변환. 2선 접속을 바꾸는 것은 회전 방향 반전이지 속도제어가 아님.",
+    "options": [
+      "인버터를 사용하여 주파수를 변화시킨다.",
+      "2선의 접속을 바꿔 회전자계의 방향이 반대로 되도록 한다.",
+      "회전자에 접속되어 있는 저항을 변화시켜 비례추이의 원리로 제어한다.",
+      "독립된 2조의 극수가 서로 다른 고정자 권선을 감아 놓고 극수를 선택하여 변화시킨다."
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 6,
+    "type": "mc",
+    "text": "실내열환경 지표 중 공기의 습도가 고려되지 않은 것은?",
+    "answer": "작용온도",
+    "explanation": "작용온도: 기온·기류·주벽표면온도 조합(습도 미포함). 유효온도: 기온·습도·기류. 등온지수: 기온·습도·기류·주벽표면온도. 신유효온도: 유효온도의 습도 과대평가를 보완.",
+    "options": [
+      "작용온도",
+      "유효온도",
+      "등온지수",
+      "신유효지수"
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 7,
+    "type": "mc",
+    "text": "수배관설비에서 리버스 리턴(reverse return)방식을 채택하는 가장 주된 이유는?",
+    "answer": "온수의 유량 분배를 균일하게 하기 위하여",
+    "explanation": "리버스 리턴 방식(역환수 방식): 온수(냉수)의 배관 길이를 동일하게 하여 유량 분배를 균일하게 하기 위한 방식.",
+    "options": [
+      "배관길이를 짧게 하기 위하여",
+      "배관시공을 용이하게 하기 위하여",
+      "온수의 유량 분배를 균일하게 하기 위하여",
+      "온수의 온도강하를 방지하여 열효율을 높이기 위하여"
+    ],
+    "비고": "05/09/2017"
+  },
+  {
+    "id": 8,
+    "type": "mc",
+    "text": "엘리베이터의 안전장치 중 엘리베이터의 카가 최상층이나 최하층을 통과하여 한계 이상 운행하는 것을 방지하는 장치는?",
+    "answer": "리미트 스위치",
+    "explanation": "리미트 스위치(Limit Switch): 카가 최상층/최하층 한계를 초과하여 운행하는 것을 방지. 완충기(Buffer): 승강로 최하단 충격 완화.",
+    "options": [
+      "완충기(Buffer)",
+      "리미트 스위치(Limit switch)",
+      "비상정지장치(Safety gear)",
+      "조속기(Speed governor)"
+    ],
+    "비고": "23/09/2017"
+  },
+  {
+    "id": 9,
+    "type": "mc",
+    "text": "온수난방에 관한 설명으로 옳지 않은 것은?",
+    "answer": "방열기 밸브의 조작으로 방열량 조절이 불가능하다.",
+    "explanation": "온수난방은 증기난방에 비해 방열기 밸브 조작으로 온도 및 방열량 조절이 용이함.",
+    "options": [
+      "난방부하 변동에 따른 온도 조절이 용이하다.",
+      "증기난방에 비해 관경이 크며 예열시간이 길다.",
+      "증기난방에 비해 난방 쾌감도가 높고 쾌적하다.",
+      "방열기 밸브의 조작으로 방열량 조절이 불가능하다."
+    ],
+    "비고": "23/09/2017"
+  },
+  {
+    "id": 10,
+    "type": "mc",
+    "text": "습공기를 가열하였을 때 상태변화로 옳은 것은? (단, 가열 전과 후의 절대습도는 동일하다.)",
+    "answer": "건구온도: 상승, 상대습도: 감소, 노점온도: 일정",
+    "explanation": "습공기를 단순 가열하면 절대습도가 동일하므로 노점온도는 일정하며, 온도가 올라가므로 건구온도 상승, 상대습도는 감소함.",
+    "options": [
+      "건구온도: 상승, 상대습도: 감소, 노점온도: 일정",
+      "건구온도: 상승, 상대습도: 일정, 노점온도: 일정",
+      "건구온도: 감소, 상대습도: 상승, 노점온도: 상승",
+      "건구온도: 일정, 상대습도: 상승, 노점온도: 감소"
+    ],
+    "비고": "23/09/2017"
+  },
+  {
+    "id": 11,
+    "type": "mc",
+    "text": "공기조화방식 중 팬코일 유닛 방식에 관한 설명으로 옳지 않은 것은?",
+    "answer": "타방식에 비해 실내 유효면적이 증가한다.",
+    "explanation": "팬코일 유닛 방식은 각 실마다 유닛을 설치해야 하므로 실내 유효면적이 감소함. 개별제어가 용이하고, 송풍덕트가 없어 설비 공간이 절약되는 점은 특징임.",
+    "options": [
+      "전수방식이다.",
+      "각 실의 개별제어가 용이하다.",
+      "타방식에 비해 실내 유효면적이 증가한다.",
+      "유닛 내에 송풍기가 설치되어 있어 소음이 발생한다."
+    ],
+    "비고": "04/03/2018"
+  },
+  {
+    "id": 12,
+    "type": "mc",
+    "text": "다음 설명에 알맞은 배관방식은? [각 기기에 접속되는 배관길이를 동일하게 하여 배관 내 마찰저항을 같게 해주는 배관방식]",
+    "answer": "리버스 리턴 방식",
+    "explanation": "리버스 리턴 방식(역환수 방식): 온수/냉수의 배관 길이를 동일하게 하여 각 기기의 유량 분배를 균일하게 맞추는 배관방식.",
+    "options": [
+      "직접 환수 방식",
+      "단관 중력식 방식",
+      "리버스 리턴 방식",
+      "하트포드 접속 방식"
+    ],
+    "비고": "04/03/2018"
+  },
+  {
+    "id": 13,
+    "type": "mc",
+    "text": "다음 배선용기기 중 전선을 접속하거나 병렬로 분기할 때 사용하는 것은?",
+    "answer": "조인트 박스",
+    "explanation": "조인트 박스(Joint Box): 전선의 접속이나 분기 작업을 위해 설치하는 상자.",
+    "options": [
+      "풀 박스",
+      "스위치 박스",
+      "아우트렛 박스",
+      "조인트 박스"
+    ],
+    "비고": "04/03/2018"
+  },
+  {
+    "id": 14,
+    "type": "mc",
+    "text": "급수방식 중 펌프직송방식에 관한 설명으로 옳지 않은 것은?",
+    "answer": "수질 오염의 가능성이 가장 크다.",
+    "explanation": "펌프직송방식은 물탱크를 거치지 않고 직접 급수하므로 수질 오염 가능성이 적음. 고가수조방식이 수질 오염 가능성이 가장 큼.",
+    "options": [
+      "기계실 면적이 커진다.",
+      "설비비 및 유지비가 고가이다.",
+      "수질 오염의 가능성이 가장 크다.",
+      "정전 시 급수를 할 수 없다는 단점이 있다."
+    ],
+    "비고": "28/04/2018"
+  },
+  {
+    "id": 15,
+    "type": "mc",
+    "text": "간접조명에 관한 설명으로 옳지 않은 것은?",
+    "answer": "직접조명에 비해 전력소비량이 적어 효율이 높다.",
+    "explanation": "간접조명은 빛을 반사시켜 부드럽고 균일한 빛을 내지만, 직접조명에 비해 전력 소비량이 많고 효율이 떨어짐.",
+    "options": [
+      "직접조명에 비해 조명률이 낮다.",
+      "직접조명에 비해 전력소비량이 적어 효율이 높다.",
+      "광원의 빛을 반사시켜 눈부심(Glare)이 거의 없다.",
+      "조도의 균일도가 높아 부드럽고 차분한 분위기를 연출할 수 있다."
+    ],
+    "비고": "28/04/2018"
+  },
+  {
+    "id": 16,
+    "type": "mc",
+    "text": "음의 성질에 관한 설명으로 옳지 않은 것은?",
+    "answer": "음파가 진행 중 장애물을 만날 때 그 뒤쪽까지 회절하는 성질은 파장이 짧을수록 강하다.",
+    "explanation": "음파의 회절(장애물 뒤로 돌아 들어가는 현상)은 파장이 길수록, 즉 주파수가 낮을수록 강함.",
+    "options": [
+      "음파의 매질은 공기 외에 고체, 액체 등도 될 수 있다.",
+      "일반적으로 동일 매질 내에서는 온도가 높을수록 음속은 빠르다.",
+      "음에너지는 구면파로 전파되므로 거리가 2배 멀어지면 음압레벨은 6dB씩 감소한다.",
+      "음파가 진행 중 장애물을 만날 때 그 뒤쪽까지 회절하는 성질은 파장이 짧을수록 강하다."
+    ],
+    "비고": "15/09/2018"
+  },
+  {
+    "id": 17,
+    "type": "mc",
+    "text": "개방형 스프링클러설비에 관한 설명으로 옳지 않은 것은?",
+    "answer": "배관의 동파우려가 있는 장소에 설치할 수 없다.",
+    "explanation": "개방형 스프링클러(일제살수식 등)는 평상시 헤드까지 배관이 비어있거나 화재 감지기 작동 시 개방되므로 동결 우려 장소에 적합함. 습식 스프링클러가 동파 우려 장소에 부적합함.",
+    "options": [
+      "일제개방밸브를 주로 사용한다.",
+      "화재 발생 시 감지기에 의해 화재를 감지한다.",
+      "배관의 동파우려가 있는 장소에 설치할 수 없다.",
+      "헤드 자체가 개방되어 있으므로 방수량이 많아 초기 소화에 효과적이다."
+    ],
+    "비고": "15/09/2018"
+  },
+  {
+    "id": 18,
+    "type": "mc",
+    "text": "복사난방에 관한 설명으로 옳지 않은 것은?",
+    "answer": "열용량이 작아서 예열시간이 짧다.",
+    "explanation": "복사난방(온수패널 등)은 바닥 등 구조체 전체를 가열하므로 열용량이 크고 예열시간이 길다.",
+    "options": [
+      "열용량이 작아서 예열시간이 짧다.",
+      "실내 상하의 온도분포가 비교적 균일하다.",
+      "매립배관이므로 방열기 등이 보이지 않아 실내 공간활용도가 높다.",
+      "공간 내 기류가 거의 형성되지 않아 쾌적한 실내환경을 유지할 수 있다."
+    ],
+    "비고": "15/09/2018"
+  },
+  {
+    "id": 19,
+    "type": "mc",
+    "text": "다중이용시설의 실내공기질 유지기준에 포함되지 않는 물질은?",
+    "answer": "오존",
+    "explanation": "다중이용시설 실내공기질 유지기준 대상: 미세먼지(PM10, PM2.5), 이산화탄소, 포름알데히드, 총부유세균, 일산화탄소. 오존은 권고기준 대상이거나 다른 법령 적용.",
+    "options": [
+      "오존",
+      "이산화탄소",
+      "포름알데히드",
+      "미세먼지(PM10)"
+    ],
+    "비고": "03/03/2019"
+  },
+  {
+    "id": 20,
+    "type": "mc",
+    "text": "터보식 냉동기에 관한 설명으로 옳지 않은 것은?",
+    "answer": "진동 및 소음이 크고 냉동능력의 조절이 불가능하다.",
+    "explanation": "터보 냉동기는 임펠러 고속 회전 원리를 이용하며 용량 제어가 용이하고 대용량에 적합함. 냉동능력 조절이 불가능하다는 설명은 틀림.",
+    "options": [
+      "대용량에 적합하다.",
+      "주로 물을 냉각하는 수냉식을 사용한다.",
+      "압축기 내부에서 윤활유와 냉매가 혼합되지 않는다.",
+      "진동 및 소음이 크고 냉동능력의 조절이 불가능하다."
+    ],
+    "비고": "03/03/2019"
+  },
+  {
+    "id": 21,
+    "type": "mc",
+    "text": "다음 배선공사방법 중 습기가 많은 장소에 사용하기 가장 부적합한 것은?",
+    "answer": "금속관 공사",
+    "explanation": "금속관 공사는 부식 우려 때문에 습기가 많은 장소에는 부적합함. 합성수지관이나 케이블 배선 등이 낫다. (※ 문제 출처별로 정답 기준이 '금속몰드'일 때도 있음, 본 데이터 기준에선 금속관)",
+    "options": [
+      "금속관 공사",
+      "가요전선관 공사",
+      "합성수지관 공사",
+      "금속제 덕트 공사"
+    ],
+    "비고": "03/03/2019"
+  },
+  {
+    "id": 22,
+    "type": "mc",
+    "text": "공기조화설비 중 가습장치로 옳지 않은 것은?",
+    "answer": "실리카겔",
+    "explanation": "실리카겔은 수분을 흡수하는 제습제(건조제)이므로 가습장치가 아님.",
+    "options": [
+      "증기 분무",
+      "수 분무",
+      "실리카겔",
+      "에어워셔(Air washer)"
+    ],
+    "비고": "27/04/2019"
+  },
+  {
+    "id": 23,
+    "type": "mc",
+    "text": "열관류율(K)의 단위를 나타낸 것으로 옳은 것은?",
+    "answer": "W/(㎡·K)",
+    "explanation": "열관류율(U-value) 단위: W/(㎡·K) 또는 kcal/(㎡·h·℃). 어떤 면적(㎡)을 통해 단위 온도차(K)일 때 전달되는 열량(W).",
+    "options": [
+      "W/K",
+      "W/(m·K)",
+      "W/(㎡·K)",
+      "W/(㎥·K)"
+    ],
+    "비고": "27/04/2019"
+  },
+  {
+    "id": 24,
+    "type": "mc",
+    "text": "피뢰설비에 관한 설명으로 옳지 않은 것은?",
+    "answer": "수뢰부의 종류에는 돌침, 수평도체, 환상도체가 있다.",
+    "explanation": "피뢰설비 수뢰부 종류: 돌침, 수평도체, 메시도체(망상도체). 환상도체는 접지극의 형태.",
+    "options": [
+      "수뢰부의 종류에는 돌침, 수평도체, 환상도체가 있다.",
+      "피뢰설비는 수뢰부시스템, 인하도선시스템, 접지시스템으로 구성된다.",
+      "인하도선은 벼락의 전류를 안전하게 대지로 유도하기 위해 설치한다.",
+      "건축물의 지붕 등에 피뢰설비 수뢰부를 설치할 때 건축물에 맞을 확률을 최소화할 수 있도록 보호각법, 회전구체법, 메시법 등을 적용하여 배치한다."
+    ],
+    "비고": "27/04/2019"
+  },
+  {
+    "id": 25,
+    "type": "mc",
+    "text": "다음 설명에 해당하는 소화설비는? [화재 발생 시 화재가 발생한 방호구역에 가스계 소화약제를 방사하여 질식 및 냉각작용으로 소화하는 설비로 주로 전기기기, 통신기기, 미술품, 도서관 등의 화재에 사용된다.]",
+    "answer": "이산화탄소 소화설비",
+    "explanation": "가스계 소화설비(이산화탄소, 할로겐화물 등)는 수손 피해가 없어야 하는 전산실, 도서관, 미술품 등에 주로 사용됨.",
+    "options": [
+      "포 소화설비",
+      "스프링클러 소화설비",
+      "물분무 소화설비",
+      "이산화탄소 소화설비"
+    ],
+    "비고": "21/09/2019"
+  },
+  {
+    "id": 26,
+    "type": "mc",
+    "text": "배수관의 관경 결정에 영향을 미치는 요소와 가장 거리가 먼 것은?",
+    "answer": "급수관의 수압",
+    "explanation": "배수관경은 기구배수부하단위(FU), 배수관의 구배, 기구 종류와 수량에 영향을 받으며 급수관의 수압과는 무관함.",
+    "options": [
+      "배수관의 구배",
+      "급수관의 수압",
+      "기구배수부하단위",
+      "연결된 위생기구의 종류 및 수량"
+    ],
+    "비고": "21/09/2019"
+  },
+  {
+    "id": 27,
+    "type": "mc",
+    "text": "흡음재료에 관한 설명으로 옳지 않은 것은?",
+    "answer": "다공질 흡음재료는 고주파수 대역보다 저주파수 대역의 흡음률이 높다.",
+    "explanation": "다공질 흡음재료(유리솜, 암면 등)는 고주파수 대역의 흡음에 유리함. 저주파수 흡음에는 판상재료나 공명기형 흡음재료가 적합함.",
+    "options": [
+      "다공질 흡음재료는 고주파수 대역보다 저주파수 대역의 흡음률이 높다.",
+      "다공질 흡음재료의 이면 공기층이 두꺼워지면 저음역의 흡음률이 증가한다.",
+      "판상형 흡음재료는 얇은 판의 진동에 의해 음에너지를 흡수하는 방식이다.",
+      "공명기형 흡음재료는 특정 주파수 대역의 흡음에 효과적이다."
+    ],
+    "비고": "21/09/2019"
+  },
+  {
+    "id": 28,
+    "type": "mc",
+    "text": "자연환기에 관한 설명으로 옳지 않은 것은?",
+    "answer": "중력환기는 실내외의 온도차에 의한 환기방식으로 온도차가 작을수록 환기량이 증가한다.",
+    "explanation": "중력환기(온도차 환기)는 실내외 온도차가 클수록 부력 효과가 커져서 환기량이 증가함.",
+    "options": [
+      "바람에 의한 환기량은 풍속에 비례한다.",
+      "중력환기는 실내외의 온도차에 의한 환기방식으로 온도차가 작을수록 환기량이 증가한다.",
+      "실내외의 공기밀도차, 실내외의 온도차, 풍압 등에 의해 자연환기가 이루어진다.",
+      "자연환기량을 증가시키기 위해서는 개구부의 면적을 넓히는 것이 유리하다."
+    ],
+    "비고": "06/06/2020"
+  },
+  {
+    "id": 29,
+    "type": "mc",
+    "text": "실내 조명설계에서 방지수(Room Index) 산정과 가장 관계가 먼 것은?",
+    "answer": "조명기구의 수량",
+    "explanation": "방지수(Room Index, RI) = (가로×세로) / (작업면에서 광원까지의 높이 × (가로+세로)). 즉, 실의 가로, 세로, 광원의 높이가 변수이며 수량은 관계없음.",
+    "options": [
+      "실의 폭",
+      "실의 길이",
+      "조명기구의 수량",
+      "작업면에서 광원까지의 높이"
+    ],
+    "비고": "06/06/2020"
+  },
+  {
+    "id": 30,
+    "type": "mc",
+    "text": "위생설비 배관 중 트랩(Trap)의 봉수가 파괴되는 원인으로 옳지 않은 것은?",
+    "answer": "모세관 현상에 의한 파괴",
+    "explanation": "봉수파괴 원인: 자기사이펀작용, 유도사이펀작용(흡인작용), 배압작용, 모세관현상, 증발현상, 운동량에 의한 관성 등. 보기에 모세관 현상 파괴가 있는데, 문제 출제 오류 또는 다른 정답일 수 있으나 여기선 2번이 답으로 주어졌는지 확인 필요. [원본 해설상 '하향 급수관' 관련 오류 문제인듯하나 옵션에 없음 - 일반적 봉수파괴가 아닌것 고르기]",
+    "options": [
+      "증발작용에 의한 파괴",
+      "모세관 현상에 의한 파괴",
+      "하향 급수관에 의한 파괴",
+      "자기 사이펀 작용에 의한 파괴"
+    ],
+    "비고": "06/06/2020"
+  },
+  {
+    "id": 31,
+    "type": "mc",
+    "text": "급수설비에서 발생하는 수격작용(Water Hammering)에 관한 설명으로 옳지 않은 것은?",
+    "answer": "배관 내 수압이 높을수록 발생하기 어렵다.",
+    "explanation": "수격작용(워터해머)은 배관 내 유속이 빠르고 수압이 높을 때 밸브를 급조작하면 압력상승에 의해 발생함. 수압이 높을수록 발생하기 쉬움.",
+    "options": [
+      "배관 내 유속이 빠를수록 발생하기 쉽다.",
+      "배관 내 수압이 높을수록 발생하기 어렵다.",
+      "기구의 밸브 등을 급격히 닫을 때 발생한다.",
+      "수격작용을 방지하기 위하여 배관에 공기실(Air chamber)을 설치한다."
+    ],
+    "비고": "26/09/2020"
+  },
+  {
+    "id": 32,
+    "type": "mc",
+    "text": "전기설비에서 역률 개선용으로 설치하는 기기는?",
+    "answer": "진상 콘덴서",
+    "explanation": "진상 콘덴서(Power Capacitor): 유도성 부하(전동기 등)에 의한 역률 저하를 개선하기 위해 무효전력을 보상하는 장치.",
+    "options": [
+      "리액터",
+      "변압기",
+      "직류전동기",
+      "진상 콘덴서"
+    ],
+    "비고": "26/09/2020"
+  },
+  {
+    "id": 33,
+    "type": "mc",
+    "text": "다음 설명에 해당하는 공기조화설비의 열원기기는? [압축기, 응축기, 팽창밸브, 증발기로 구성되며, 냉매의 상변화 과정을 통해 열을 이동시켜 냉·난방을 수행한다.]",
+    "answer": "히트펌프",
+    "explanation": "히트펌프(Heat Pump): 냉동 사이클(압축-응축-팽창-증발)의 4요소를 구성하여 증발기에서의 흡열(냉방), 응축기에서의 방열(난방)을 모두 이용하는 기기.",
+    "options": [
+      "보일러",
+      "냉각탑",
+      "히트펌프",
+      "흡수식 냉동기"
+    ],
+    "비고": "26/09/2020"
+  },
+  {
+    "id": 34,
+    "type": "mc",
+    "text": "급탕설비의 배관 시공 시 주의사항으로 옳지 않은 것은?",
+    "answer": "수평배관의 구배는 중력식인 경우 1/250 정도로 한다.",
+    "explanation": "급탕 배관 구배: 중력순환식은 1/150, 강제순환식은 1/200 정도로 함. 1/250은 구배가 너무 작음.",
+    "options": [
+      "배관은 팽창·수축에 대비하여 신축이음을 설치한다.",
+      "수평배관의 구배는 중력식인 경우 1/250 정도로 한다.",
+      "배관의 굴곡부는 공기가 체류하지 않도록 주의하여 배관한다.",
+      "순환배관은 중력방식의 경우 복관식으로 하고 기기배치는 리버스 리턴 방식으로 하는 것이 좋다."
+    ],
+    "비고": "07/03/2021"
+  },
+  {
+    "id": 35,
+    "type": "mc",
+    "text": "조명설비에서 사용하는 광원 중 연색성이 가장 우수한 것은?",
+    "answer": "백열전구",
+    "explanation": "백열전구(할로겐전구 포함)는 연색성 지수(Ra)가 100에 가까워 자연광과 가장 유사한 색감을 나타냄.",
+    "options": [
+      "백열전구",
+      "형광램프",
+      "나트륨램프",
+      "고압수은램프"
+    ],
+    "비고": "07/03/2021"
+  },
+  {
+    "id": 36,
+    "type": "mc",
+    "text": "공조방식 중 덕트병용 팬코일 유닛 방식에 관한 설명으로 옳지 않은 것은?",
+    "answer": "전수방식으로 실내의 환기성능이 우수하다.",
+    "explanation": "덕트병용 팬코일 유닛 방식은 공기-수 방식으로 외기를 덕트로 공급하므로 환기성능을 확보할 수 있음. 전수방식(팬코일유닛 단독)이 아님.",
+    "options": [
+      "전수방식으로 실내의 환기성능이 우수하다.",
+      "각 실의 온·습도 조절 등 개별제어가 가능하다.",
+      "단일덕트 방식에 비해 덕트 공간을 줄일 수 있다.",
+      "냉·온수를 각 유닛으로 보내기 위한 배관설비가 필요하다."
+    ],
+    "비고": "07/03/2021"
+  },
+  {
+    "id": 37,
+    "type": "mc",
+    "text": "다음 중 배수관망에서 가장 상부에 설치하는 통기관은?",
+    "answer": "신설 통기관(Loop vent)",
+    "explanation": "각개통기관(Individual vent), 루프통기관(환상통기관), 신정통기관(Stack vent) 등이 있음. 배수수직관의 최상단 관경을 축소하지 않고 지붕 위로 연장한 것은 신정통기관임. 보기 중 신설 통기관(Loop)은 환상통기.",
+    "options": [
+      "루프 통기관",
+      "신설 통기관(Loop vent)",
+      "결합 통기관",
+      "도피 통기관"
+    ],
+    "비고": "15/05/2021"
+  },
+  {
+    "id": 38,
+    "type": "mc",
+    "text": "건축물 내 전압강하 산정에 가장 직접적으로 관련된 요소는?",
+    "answer": "도체의 단면적",
+    "explanation": "전압강하 수식 e = K * (L*I) / A. (A: 단면적, L: 배선길이, I: 전류). 도체의 단면적이 클수록 저항이 작아져 전압강하가 줄어듦.",
+    "options": [
+      "부하의 종류",
+      "광원의 연색성",
+      "도체의 단면적",
+      "조명기구의 배광방식"
+    ],
+    "비고": "15/05/2021"
+  },
+  {
+    "id": 39,
+    "type": "mc",
+    "text": "냉동기에서 응축기의 역할은?",
+    "answer": "냉매가스를 냉각하여 액체상태로 만든다.",
+    "explanation": "응축기(Condenser): 압축기에서 나온 고온고압의 기체 냉매를 냉각수나 공기로 식혀 중온고압의 액체 냉매로 만드는 역할.",
+    "options": [
+      "냉매가스를 냉각하여 액체상태로 만든다.",
+      "저온저압의 기체냉매를 고온고압으로 압축한다.",
+      "액체냉매를 교축작용으로 감압하여 증발하기 쉽게 한다.",
+      "액체냉매가 기화하면서 주위의 열을 빼앗아 냉각효과를 얻는다."
+    ],
+    "비고": "15/05/2021"
+  },
+  {
+    "id": 40,
+    "type": "mc",
+    "text": "전기화재 방지를 위한 누전차단기(ELB)의 설치 목적과 가장 거리가 먼 것은?",
+    "answer": "역률의 개선",
+    "explanation": "누전차단기는 감전 사고 방지, 화재 방지, 기기 보호 등을 목적으로 함. 역률 개선은 진상 콘덴서의 목적임.",
+    "options": [
+      "감전 사고 방지",
+      "역률의 개선",
+      "전기 화재 방지",
+      "지락 전류 차단"
+    ],
+    "비고": "05/03/2022"
+  },
+  {
+    "id": 41,
+    "type": "mc",
+    "text": "급수설비에서 크로스 커넥션(Cross connection)을 방지하는 이유로 가장 적합한 것은?",
+    "answer": "급수의 오염방지",
+    "explanation": "크로스 커넥션: 급수배관이 오수, 배수 등 다른 계통의 배관과 교차 연결되어 수질이 오염되는 현상. 이를 방지하는 주된 목적은 급수의 오염방지임.",
+    "options": [
+      "급수의 오염방지",
+      "배관 내 수압 유지",
+      "수격작용 방지",
+      "배관의 부식 방지"
+    ],
+    "비고": "05/03/2022"
+  },
+  {
+    "id": 42,
+    "type": "mc",
+    "text": "에스컬레이터의 구성요소 중 사람이 타는 디딤판(Step)에 구동력을 전달하는 주요 장치는?",
+    "answer": "구동 체인(Drive chain)",
+    "explanation": "에스컬레이터 구동 체인은 모터의 동력을 디딤판(스텝)에 전달하여 회전하게 하는 주요 장치임.",
+    "options": [
+      "스텝 체인",
+      "구동 체인(Drive chain)",
+      "핸드레일 가이드",
+      "콤 플레이트"
+    ],
+    "비고": "05/03/2022"
+  },
+  {
+    "id": 43,
+    "type": "mc",
+    "text": "온수난방에서 팽창탱크를 설치하는 가장 주된 이유는?",
+    "answer": "물의 온도상승에 따른 체적팽창 흡수",
+    "explanation": "온수난방 배관 내 물이 가열되면 팽창하므로 그 팽창량을 흡수하여 배관 파손을 막고 압력을 일정하게 유지하기 위해 팽창탱크를 설치함.",
+    "options": [
+      "온수의 온도 하강 방지",
+      "배관 내 공기 배출",
+      "수격작용 방지",
+      "물의 온도상승에 따른 체적팽창 흡수"
+    ],
+    "비고": "24/04/2022"
+  },
+  {
+    "id": 44,
+    "type": "mc",
+    "text": "건축물 내 엘리베이터의 배치계획으로 적절하지 않은 것은?",
+    "answer": "여러 대를 설치할 경우 각 층에서 승객의 보행거리가 길어지도록 집중 배치한다.",
+    "explanation": "여러 대 설치 시 승객의 대기 시간과 보행 거리를 최소화하기 위해 엘리베이터 홀을 중심으로 집중 또는 알코브형으로 배치하여 보행거리를 짧게 해야 함.",
+    "options": [
+      "건물의 중심부에 배치하는 것이 동선상 유리하다.",
+      "엘리베이터 홀은 통과교통이 발생하지 않도록 배치한다.",
+      "여러 대를 설치할 경우 각 층에서 승객의 보행거리가 길어지도록 집중 배치한다.",
+      "다수의 엘리베이터 설치 시 일렬배치보다는 마주보는 대면배치가 대기 승객에게 유리하다."
+    ],
+    "비고": "24/04/2022"
+  },
+  {
+    "id": 45,
+    "type": "mc",
+    "text": "조도 계산의 기본 공식으로 올바른 것은? (단, F: 광속, U: 조명률, N: 광원 수, A: 실면적, D: 감광보상율, E: 조도)",
+    "answer": "E = (F·U·N) / (A·D)",
+    "explanation": "조도계산식 FUN = EAD 에서 E = (F·U·N) / (A·D).",
+    "options": [
+      "E = (F·U·N) / A",
+      "E = (F·U·N) / (A·D)",
+      "E = (A·D) / (F·U·N)",
+      "E = (F·N) / (A·U·D)"
+    ],
+    "비고": "24/04/2022"
+  },
+  {
+    "id": 46,
+    "type": "mc",
+    "text": "다중이용시설의 실내공기질 관리를 위한 기계환기설비의 필요 환기량 산정 기준은?",
+    "answer": "실내 거주인원 1인당 환기량",
+    "explanation": "법적 다중이용시설이나 공동주택 등에서 기계환기설비 용량은 실면적, 체적, 또는 거주 인원수 당 기준을 적용하며 일반적 기준표는 1인당 환기량(㎥/h·인)을 명시하기도 함. 시간당 환기횟수(ACH)도 함께 적용됨.",
+    "options": [
+      "건물의 연면적",
+      "실내 거주인원 1인당 환기량",
+      "조명기구의 발열량",
+      "외기 온도 및 습도"
+    ],
+    "비고": "24/09/2022"
+  },
+  {
+    "id": 47,
+    "type": "mc",
+    "text": "다음 중 스프링클러설비의 화재 감지 및 밸브 개방 방식이 다른 하나는?",
+    "answer": "일제살수식 스프링클러설비",
+    "explanation": "습식, 건식, 준비작동식은 헤드가 폐쇄형이고, 일제살수식은 헤드가 개방형이며 화재감지기 연동으로 밸브(일제개방밸브)가 열려 전 구역에 물이 쏟아짐.",
+    "options": [
+      "습식 스프링클러설비",
+      "건식 스프링클러설비",
+      "일제살수식 스프링클러설비",
+      "준비작동식 스프링클러설비"
+    ],
+    "비고": "24/09/2022"
+  },
+  {
+    "id": 48,
+    "type": "mc",
+    "text": "열교(Heat bridge) 현상이 주로 발생하는 부위와 그 방지대책으로 올바른 연결은?",
+    "answer": "발코니 접합부 - 외단열 공법 적용",
+    "explanation": "열교현상은 구조체의 단열이 끊기거나 이질재가 만나는 곳(발코니 돌출부, 벽 모서리 등)에서 주로 발생. 이를 완벽하게 차단하기 위해 외단열 공법이 가장 효과적임.",
+    "options": [
+      "건물 중앙부 - 내단열 공법 적용",
+      "발코니 접합부 - 외단열 공법 적용",
+      "창호 유리면 - 복층유리 대신 단판유리 적용",
+      "내벽 모서리 - 내벽체의 열관류율 증가"
+    ],
+    "비고": "24/09/2022"
+  },
+  {
+    "id": 49,
+    "type": "mc",
+    "text": "배수관 트랩의 구비조건으로 옳지 않은 것은?",
+    "answer": "구조가 복잡하여 유수의 정체공간이 많아야 한다.",
+    "explanation": "트랩은 오물 정체가 없도록 구조가 간단하고 내면이 매끄러워야 함. 정체공간이 많으면 악취 및 막힘의 원인이 됨.",
+    "options": [
+      "봉수가 확실히 유지되어야 한다.",
+      "구조가 간단하고 내면이 평활해야 한다.",
+      "구조가 복잡하여 유수의 정체공간이 많아야 한다.",
+      "배수 중에 섞여 있는 오물이 정체하지 않는 구조여야 한다."
+    ],
+    "비고": "04/03/2023"
+  },
+  {
+    "id": 50,
+    "type": "mc",
+    "text": "냉동기의 종류 중 폐열, 태양열 등의 저온 열원을 구동 에너지로 사용할 수 있는 것은?",
+    "answer": "흡수식 냉동기",
+    "explanation": "흡수식 냉동기는 기계적 에너지(전기 압축기) 대신 열에너지(가스, 증기, 폐열, 온수 등)를 가열원으로 사용하여 흡수제(리튬브로마이드)와 냉매(물)의 사이클로 냉동 효과를 얻음.",
+    "options": [
+      "터보식 냉동기",
+      "왕복동식 냉동기",
+      "스크류식 냉동기",
+      "흡수식 냉동기"
+    ],
+    "비고": "04/03/2023"
+  },
+  {
+    "id": 51,
+    "type": "mc",
+    "text": "소방설비 중 피난설비에 속하지 않는 것은?",
+    "answer": "자동화재탐지설비",
+    "explanation": "피난설비: 피난기구(완강기 등), 인명구조기구, 유도등/유도표지, 비상조명등. 자동화재탐지설비는 경보설비에 속함.",
+    "options": [
+      "완강기",
+      "유도등",
+      "비상조명등",
+      "자동화재탐지설비"
+    ],
+    "비고": "04/03/2023"
+  },
+  {
+    "id": 52,
+    "type": "mc",
+    "text": "조명방식 중 국부조명 방식의 장점으로 옳지 않은 것은?",
+    "answer": "실내 전체의 조도를 균일하게 할 수 있다.",
+    "explanation": "국부조명은 작업면 등 필요한 국소 부위만 높은 조도로 비추는 방식. 실내 전체 조도를 균일하게 하는 것은 전반조명임.",
+    "options": [
+      "필요한 부분만 조명하므로 전력소비가 절약된다.",
+      "실내 전체의 조도를 균일하게 할 수 있다.",
+      "작업면의 조도를 충분히 높일 수 있다.",
+      "작업자의 시선 방향에 따라 눈부심 방지가 용이하다."
+    ],
+    "비고": "13/05/2023"
+  },
+  {
+    "id": 53,
+    "type": "mc",
+    "text": "급수방식 중 펌프직송(압력탱크) 방식과 비교하여 고가수조 방식의 특징으로 옳은 것은?",
+    "answer": "급수 압력이 일정하다.",
+    "explanation": "고가수조 방식: 옥상 등 높은 곳의 수조에서 중력으로 급수하므로, 수위가 일정하면 층별로 급수 압력이 항상 일정함.",
+    "options": [
+      "설비비가 가장 저렴하다.",
+      "급수 압력이 일정하다.",
+      "기계실의 차지 면적이 넓다.",
+      "정전 시 급수가 즉시 중단된다."
+    ],
+    "비고": "13/05/2023"
+  },
+  {
+    "id": 54,
+    "type": "mc",
+    "text": "전기설비에서 배전반이나 분전반을 설치하는 장소로 적합하지 않은 것은?",
+    "answer": "은폐된 장소로 점검이 불가능한 곳",
+    "explanation": "분전반/배전반은 보수, 점검, 조작이 용이한 노출된 장소나 전용 공간에 설치해야 함.",
+    "options": [
+      "부하의 중심 부근",
+      "은폐된 장소로 점검이 불가능한 곳",
+      "건조하고 환기가 잘 되는 곳",
+      "조작과 유지보수가 용이한 곳"
+    ],
+    "비고": "13/05/2023"
+  },
+  {
+    "id": 55,
+    "type": "mc",
+    "text": "온수난방설비에 관한 설명으로 옳지 않은 것은?",
+    "answer": "상향식 배관에서는 공기빼기 밸브를 최하단 방열기에 설치한다.",
+    "explanation": "온수난방 시스템에서 배관 내 공기는 부력에 의해 위로 모이므로 최상단 부위(방열기 상단 등)에 공기빼기 밸브를 설치함.",
+    "options": [
+      "난방 정지 후에도 여열이 길게 남는다.",
+      "방열기 밸브를 통해 실내 온도를 조절하기 쉽다.",
+      "증기난방에 비해 배관의 부식 우려가 적다.",
+      "상향식 배관에서는 공기빼기 밸브를 최하단 방열기에 설치한다."
+    ],
+    "비고": "02/09/2023"
+  },
+  {
+    "id": 56,
+    "type": "mc",
+    "text": "건축물의 단열계획 시 고려사항으로 옳지 않은 것은?",
+    "answer": "창호면적은 최대한 크게 하여 단열성능을 향상시킨다.",
+    "explanation": "창호(유리)는 일반 벽체에 비해 단열성능이 크게 떨어지므로, 열손실을 줄이려면 창호면적을 적절히 제한하거나 고단열 창호를 사용해야 함.",
+    "options": [
+      "외단열 공법을 사용하여 열교현상을 줄인다.",
+      "건축물의 외피면적을 최소화하여 열손실을 줄인다.",
+      "창호면적은 최대한 크게 하여 단열성능을 향상시킨다.",
+      "틈새바람을 방지하기 위해 기밀성능이 좋은 창호를 사용한다."
+    ],
+    "비고": "02/09/2023"
+  },
+  {
+    "id": 57,
+    "type": "mc",
+    "text": "다음 설명에 해당하는 소화설비는? [건물 내부 천장에 배관 및 헤드를 설치하여, 화재 시 감지기에 의해 화재를 감지하고 헤드가 개방되면서 배관 내의 가압수가 살수되어 초기 화재를 진압하는 설비]",
+    "answer": "준비작동식 스프링클러설비",
+    "explanation": "감지기 작동에 의해 밸브가 열리고 헤드는 폐쇄형이었다가 열에 의해 개방되어 살수되는 방식은 준비작동식임. 일제살수식은 헤드가 이미 개방형.",
+    "options": [
+      "옥내소화전설비",
+      "일제살수식 스프링클러설비",
+      "준비작동식 스프링클러설비",
+      "드렌처 설비"
+    ],
+    "비고": "02/09/2023"
+  },
+  {
+    "id": 58,
+    "type": "mc",
+    "text": "배수설비에서 통기관(Vent pipe)의 역할이 아닌 것은?",
+    "answer": "배수관 내의 유속을 감소시킨다.",
+    "explanation": "통기관 목적: 봉수 보호(파괴 방지), 배수관 내 공기 유통을 원활히 하여 배수 흐름 촉진(유속 감소 아님), 배수관 내 악취 및 유해가스 환기.",
+    "options": [
+      "트랩의 봉수를 보호한다.",
+      "배수관 내의 악취 등을 옥외로 배출한다.",
+      "배수관 내의 유속을 감소시킨다.",
+      "배수 흐름을 원활하게 한다."
+    ],
+    "비고": "24/02/2024"
+  },
+  {
+    "id": 59,
+    "type": "mc",
+    "text": "공기조화 방식 중 개별제어 방식에 해당하지 않는 것은?",
+    "answer": "정풍량 단일덕트 방식",
+    "explanation": "정풍량 단일덕트 방식(CAV)은 전 실에 동일한 온도, 동일한 풍량을 공급하므로 각 실별 개별제어가 어려움. 변풍량 방식(VAV)이나 팬코일 방식이 개별제어에 적합.",
+    "options": [
+      "팬코일 유닛 방식",
+      "변풍량 단일덕트 방식(VAV)",
+      "정풍량 단일덕트 방식",
+      "패키지 에어컨 방식"
+    ],
+    "비고": "24/02/2024"
+  },
+  {
+    "id": 60,
+    "type": "mc",
+    "text": "실내 음향설계에서 잔향시간(Reverberation time)에 관한 설명으로 옳은 것은?",
+    "answer": "실내의 체적이 클수록 잔향시간은 길어진다.",
+    "explanation": "Sabine 잔향시간 공식 T = 0.161V / A. 잔향시간은 실의 체적(V)에 비례하고 실내 총 흡음력(A)에 반비례함.",
+    "options": [
+      "실내의 체적이 클수록 잔향시간은 길어진다.",
+      "실내의 총 흡음력이 클수록 잔향시간은 길어진다.",
+      "잔향시간은 음원이 발생한 직후의 초기 지연시간을 의미한다.",
+      "강연장, 극장 등은 음악당에 비해 잔향시간을 길게 설계하는 것이 좋다."
+    ],
+    "비고": "24/02/2024"
+  },
+  {
+    "id": 61,
+    "type": "mc",
+    "text": "다음 전기설비 배선 중 단면적이 가장 넓어야 하는 간선은?",
+    "answer": "전압강하가 가장 우려되는 장거리 간선",
+    "explanation": "전압강하는 길이에 비례하고 단면적에 반비례함. 따라서 장거리일수록 전압강하를 방지하기 위해 굵은 전선(단면적이 넓은 선)을 사용해야 함.",
+    "options": [
+      "조명 부하용 소용량 간선",
+      "전압강하가 가장 우려되는 장거리 간선",
+      "동력용 단거리 간선",
+      "접지용 보조 간선"
+    ],
+    "비고": "24/02/2024"
+  },
+  {
+    "id": 62,
+    "type": "mc",
+    "text": "승강기 설비 중 균형추(Counter weight)를 사용하는 주된 목적은?",
+    "answer": "권상 모터의 부하(동력)를 경감시킨다.",
+    "explanation": "균형추는 엘리베이터 카(Car)의 중량과 카 내 적재하중의 절반 정도를 상쇄하여 권상 모터의 용량을 줄이고 에너지를 절감하는 역할을 함.",
+    "options": [
+      "승강기의 상승 속도를 높인다.",
+      "승강기 와이어 로프의 마모를 방지한다.",
+      "카(Car)의 진동을 방지하여 승차감을 향상시킨다.",
+      "권상 모터의 부하(동력)를 경감시킨다."
+    ],
+    "비고": "24/02/2024"
+  }
+]
+</script>
+
+<script>
+(function(){
+  var QS  = JSON.parse(document.getElementById('qdata').textContent);
+  var SK  = 'posco_sel_mc_1';
+  var tab = 'all', fil = 'all';
+  var retrySet = null; 
+  var st  = {a:{}, f:{}, o:[]};
+
+  function initOrder(){ st.o = QS.map(function(q){ return String(q.id); }); }
+  initOrder();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(SK);
+      if(!raw) return;
+      var p = JSON.parse(raw);
+      if(p.a) st.a = p.a;
+      if(p.f) st.f = p.f;
+      if(p.o && p.o.length === QS.length) st.o = p.o;
+    }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem(SK, JSON.stringify(st)); }catch(e){}
+  }
+
+  function getQ(id){
+    var sid = String(id);
+    for(var i=0; i<QS.length; i++){ if(String(QS[i].id)===sid) return QS[i]; }
+    return null;
+  }
+
+  function esc(s){
+    return String(s||'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function updateStats(){
+    var ak=Object.keys(st.a), ok=0, ng=0;
+    for(var i=0;i<ak.length;i++){ if(st.a[ak[i]].correct) ok++; else ng++; }
+    var fk=Object.keys(st.f), fv=0;
+    for(var i=0;i<fk.length;i++){ if(st.f[fk[i]]) fv++; }
+    document.getElementById('sc').textContent = ok;
+    document.getElementById('sw').textContent = ng;
+    document.getElementById('sf').textContent = fv;
+    var done = ak.length, total = QS.length;
+    document.getElementById('ptxt').textContent = done+' / '+total+' 완료';
+    document.getElementById('pb').style.width   = (total > 0 ? (done/total*100) : 0)+'%';
+  }
+
+  function allOrderedQs(){
+    var out=[];
+    for(var i=0;i<st.o.length;i++){ var q=getQ(st.o[i]); if(q) out.push(q); }
+    return out;
+  }
+
+  function applyFilter(qs){
+    return qs.filter(function(q){
+      var k=String(q.id);
+      if(fil==='mc' && q.type!=='mc') return false;
+      if(fil==='un' && st.a[k])       return false;
+      return true;
+    });
+  }
+
+  function rq(q){
+    var k   = String(q.id);
+    var ans = st.a[k];
+    var fav = !!st.f[k];
+    var done= !!ans;
+
+    var ind = done
+      ? (ans.correct
+          ? '<span class="ind io">&#10003; 정답</span>'
+          : '<span class="ind ix">&#10007; 오답</span>')
+      : '<span class="ind ip">미완료</span>';
+
+    var bdg = '<span class="badge bmc">객관식</span>';
+    var favBtn = '<button class="favb'+(fav?' on':'')+'" data-k="'+k+'" onclick="APP.fav(this)">&#9733;</button>';
+
+    var inp = '';
+    var opts='', os=q.options||[];
+    for(var i=0;i<os.length;i++){
+      var sc=(ans&&ans.given===os[i])?' sel':'';
+      var d2=done?' disabled':'';
+      opts += '<button class="mo'+sc+'"'+d2+' data-k="'+k+'" data-i="'+i+'" onclick="APP.mc(this)">'
+            + '<span class="ol">'+(i+1)+'</span>'+esc(os[i])+'</button>';
+    }
+    inp = '<div class="mco">'+opts+'</div>';
+
+    var fbk = '';
+    if(done){
+      var fc = ans.correct ? 'fbk ok show' : 'fbk ng show';
+      var ic = ans.correct ? '&#9989; 정답입니다!' : '&#10060; 틀렸습니다';
+      fbk = '<div class="'+fc+'">'
+          + '<div class="fbh">'+ic+'</div>'
+          + '<div class="fba">정답: <strong>'+esc(q.answer)+'</strong></div>'
+          + '<div>'+esc(q.explanation||'')+'</div>'
+          + '</div>';
+    }
+
+    var remark = q.비고 ? '<div style="font-size:0.7rem; color:var(--mu); margin-top:5px;">[비고: '+esc(q.비고)+']</div>' : '';
+
+    return '<div class="qcard" id="qc-'+k+'">'
+      + ind
+      + '<div class="qm"><span class="qn">No.'+q.id+'</span>'+bdg+favBtn+'</div>'
+      + '<div class="qt">'+esc(q.text)+'</div>'
+      + inp + fbk + remark
+      + '</div>';
+  }
+
+  function setEl(id, qs, em){
+    var el = document.getElementById(id);
+    if(!qs.length){ el.innerHTML='<div class="empty">'+em+'</div>'; return; }
+    var p=[];
+    for(var i=0;i<qs.length;i++) p.push(rq(qs[i]));
+    el.innerHTML = p.join('');
+  }
+
+  function renderAll(){
+    setEl('ql', applyFilter(allOrderedQs()), '해당 조건의 문제가 없습니다.');
+    updateStats();
+  }
+
+  function renderFav(){
+    var qs = retrySet
+      ? QS.filter(function(q){ return !!retrySet[String(q.id)]; })
+      : QS.filter(function(q){ return !!st.f[String(q.id)]; });
+
+    var stopBtn = document.getElementById('stop-fav');
+    if(stopBtn) stopBtn.style.display = retrySet ? '' : 'none';
+
+    if(!qs.length){
+      document.getElementById('fl').innerHTML =
+        '<div class="empty">즐겨찾기한 문제가 없습니다. &#9733; 버튼을 눌러 추가하세요.</div>';
+      updateStats(); return;
+    }
+    var p=[];
+    for(var i=0;i<qs.length;i++) p.push(rq(qs[i]));
+    document.getElementById('fl').innerHTML = p.join('');
+    updateStats();
+  }
+
+  function renderWrong(){
+    var qs = retrySet
+      ? QS.filter(function(q){ return !!retrySet[String(q.id)]; })
+      : QS.filter(function(q){ var a=st.a[String(q.id)]; return a&&!a.correct; });
+
+    var stopBtn = document.getElementById('stop-wrong');
+    if(stopBtn) stopBtn.style.display = retrySet ? '' : 'none';
+
+    if(!qs.length){
+      document.getElementById('wl').innerHTML = '<div class="empty">&#127881; 틀린 문제가 없습니다!</div>';
+      updateStats(); return;
+    }
+    var p=[];
+    for(var i=0;i<qs.length;i++) p.push(rq(qs[i]));
+    document.getElementById('wl').innerHTML = p.join('');
+    updateStats();
+  }
+
+  function redraw(){
+    if(tab==='all')        renderAll();
+    else if(tab==='fav')   renderFav();
+    else                   renderWrong();
+  }
+
+  window.APP = {
+    mc: function(btn){
+      var k=btn.dataset.k, i=parseInt(btn.dataset.i,10);
+      var q=getQ(k); if(!q) return;
+      var g=(q.options||[])[i];
+      st.a[k]={given:g, correct:g===q.answer};
+      save(); redraw();
+    },
+    fav: function(btn){
+      var k=btn.dataset.k;
+      st.f[k]=!st.f[k];
+      save(); redraw();
+    }
+  };
+
+  window.switchTab = function(t){
+    tab=t; retrySet=null;
+    ['all','fav','wrong'].forEach(function(x){
+      document.getElementById('tb-'+x).classList.toggle('active', x===t);
+      document.getElementById('pv-'+x).style.display = x===t ? '' : 'none';
+    });
+    var sf=document.getElementById('stop-fav'),sw=document.getElementById('stop-wrong');
+    if(sf) sf.style.display='none';
+    if(sw) sw.style.display='none';
+    redraw();
+  };
+
+  window.setFilter = function(f){
+    fil=f;
+    ['all','mc','un'].forEach(function(x){
+      var el=document.getElementById('ff-'+x);
+      if(el) el.classList.toggle('on', x===f);
+    });
+    renderAll();
+  };
+
+  window.doShuffle = function(){
+    var arr=st.o.slice();
+    for(var i=arr.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+    }
+    st.o=arr; save(); renderAll();
+  };
+
+  window.doReorder = function(){
+    initOrder(); save(); renderAll();
+  };
+
+  window.retryFav = function(){
+    var qs=QS.filter(function(q){ return !!st.f[String(q.id)]; });
+    if(!qs.length){ alert('즐겨찾기한 문제가 없습니다.'); return; }
+    retrySet={};
+    qs.forEach(function(q){ retrySet[String(q.id)]=true; });
+    qs.forEach(function(q){ delete st.a[String(q.id)]; });
+    save(); renderFav();
+  };
+
+  window.retryWrong = function(){
+    var qs=QS.filter(function(q){ var a=st.a[String(q.id)]; return a&&!a.correct; });
+    if(!qs.length){ alert('틀린 문제가 없습니다.'); return; }
+    retrySet={};
+    qs.forEach(function(q){ retrySet[String(q.id)]=true; });
+    qs.forEach(function(q){ delete st.a[String(q.id)]; });
+    save(); renderWrong();
+  };
+
+  window.clearRetry = function(){
+    retrySet=null;
+    redraw();
+  };
+
+  window.confirmReset = function(){
+    if(!confirm('정말 모든 학습 기록과 즐겨찾기를 초기화할까요?')) return;
+    localStorage.removeItem(SK);
+    st={a:{},f:{},o:[]};
+    initOrder();
+    tab='all'; fil='all'; retrySet=null;
+    ['all','fav','wrong'].forEach(function(x){
+      document.getElementById('tb-'+x).classList.toggle('active', x==='all');
+      document.getElementById('pv-'+x).style.display = x==='all' ? '' : 'none';
+    });
+    ['all','mc','un'].forEach(function(x){
+      var el=document.getElementById('ff-'+x);
+      if(el) el.classList.toggle('on', x==='all');
+    });
+    var sf=document.getElementById('stop-fav'),sw=document.getElementById('stop-wrong');
+    if(sf) sf.style.display='none';
+    if(sw) sw.style.display='none';
+    updateStats(); renderAll();
+  };
+
+  load();
+  redraw();
+})();
+</script>
+</body>
+</html>
